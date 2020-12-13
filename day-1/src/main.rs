@@ -12,14 +12,14 @@ fn main() {
 
     let pair = find_pair_sum(&lines, 2020);
     if let Some((first, second)) = pair {
-        println!("Pair multiple {}", first * second);
+        println!("{} * {} = {}", first, second, first * second);
     } else {
         println!("Pair not found!");
     }
 
     let triplet = find_triplet_sum(&lines, 2020);
     if let Some((first, second, third)) = triplet {
-        println!("Triplet multiple {}", first * second * third);
+        println!("{} * {} * {} = {}", first, second, third, first * second * third);
     } else {
         println!("Triplet not found!");
     }
@@ -41,18 +41,17 @@ fn find_pair_sum(lines: &[i32], sum: i32) -> Option<(i32, i32)> {
 }
 
 fn find_triplet_sum(lines: &[i32], sum: i32) -> Option<(i32, i32, i32)> {
-    let last = lines.len() - 1;
-    let mut pair_range = 2;
+    let mut third = lines.len() - 1;
 
-    for i in 0..(last - 1) {
-        let third = lines[last - i];
-        let pair_sum = sum - third;
-        while pair_range < last && lines[pair_range] < pair_sum {
-            pair_range += 1;
+    for i in 0..(third-1) {
+        let pair_sum = sum - lines[i];
+        let second = i + 1;
+        while third > second && lines[third] >= pair_sum {
+            third -= 1;
         }
 
-        if let Some((first,second)) = find_pair_sum(&lines[0..pair_range], pair_sum) {
-            return Some((first, second, third));
+        if let Some((second,third)) = find_pair_sum(&lines[second..=third], pair_sum) {
+            return Some((lines[i], second, third));
         }
     }
 
