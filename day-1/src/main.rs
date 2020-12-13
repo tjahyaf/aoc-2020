@@ -2,7 +2,7 @@ use std::fs::File;
 use std::io::{self, BufRead};
 
 fn main() {
-    let file = File::open("D:/projects/github/aoc-2020/day-1/src/input.txt").unwrap();
+    let file = File::open("./input.txt").unwrap();
     let lines = io::BufReader::new(file).lines();
     let mut lines = lines.map(|l| {
         l.unwrap().parse::<i32>().unwrap()
