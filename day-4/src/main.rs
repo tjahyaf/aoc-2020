@@ -2,15 +2,13 @@ use std::fs::File;
 use std::io::{self, BufRead};
 
 fn main() {
-    let lines = io::BufReader::new(File::open("./input.txt").unwrap()).lines();
+    let lines = io::BufReader::new(File::open("./input.txt").unwrap()).lines().flatten();
     
     let mut parsing = false;
     let mut attrs = 0;
     let mut valid = 0;
 
     for line in lines {
-        let line = line.unwrap();
-        
         if line.len() != 0 {
             parsing = true;
             attrs += line.split(' ').filter(|s| is_valid_attr(s)).count();
