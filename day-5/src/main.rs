@@ -35,11 +35,8 @@ fn to_id(line: &str) -> usize {
     let binary = line
         .chars()
         .map(|c| match c {
-            'F' => b'0',
-            'B' => b'1',
-            'R' => b'1',
-            'L' => b'0',
-            _ => c as u8,
+            'B' | 'R' => b'1',
+            _ => b'0',
         })
         .collect::<Vec<_>>();
     let binary = String::from_utf8(binary).unwrap();
