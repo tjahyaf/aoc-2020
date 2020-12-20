@@ -32,14 +32,13 @@ fn main() {
 }
 
 fn to_id(line: &str) -> usize {
-    let binary = line
+    line
         .chars()
         .map(|c| match c {
-            'B' | 'R' => b'1',
-            _ => b'0',
+            'B' | 'R' => 1usize,
+            _ => 0usize,
         })
-        .collect::<Vec<_>>();
-    let binary = String::from_utf8(binary).unwrap();
-
-    usize::from_str_radix(&binary, 2).unwrap()
+        .fold(0usize, |id, c| {
+            (id << 1) | c
+        })
 }
