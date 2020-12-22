@@ -20,10 +20,9 @@ fn main() {
 fn part_one(adaptors: &[usize]) -> usize {
     let mut diff1 = 0usize;
     let mut diff3 = 1usize;
-    let mut prev = 0usize; 
 
-    for i in adaptors {
-        match i - prev {
+    let _ = adaptors.iter().fold(0usize, |prev, num| {
+        match num - prev {
             1 => {
                 diff1 += 1;
             },
@@ -33,8 +32,8 @@ fn part_one(adaptors: &[usize]) -> usize {
             _ => ()
         }
 
-        prev = *i;
-    }
+        *num
+    });
 
     diff1 * diff3
 }
