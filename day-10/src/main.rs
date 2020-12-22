@@ -51,13 +51,10 @@ fn part_two(adaptors: &[usize]) -> usize {
             end += 1;
         }
 
-        // Number of possible combination depends on number of items
-        let combo = match end - start {
-            1 => 1,
-            2 => 3,
-            3 => 7,
-            _ => panic!("Diff cannot be more than 3")
-        };
+        let items = end - start;    // Number of items in the batch
+
+        // Number of possible combination depends on number of items: 2^items - 1
+        let combo = (1 << items) - 1;
 
         // Number of invalid combinations depend on the gap with next batch
         let gap = if end == adaptors.len() {
@@ -66,18 +63,15 @@ fn part_two(adaptors: &[usize]) -> usize {
             adaptors[end] - adaptors[end-1]
         };
 
-        let invalid = match combo {
-            3 => match gap {
-                3 => 1,
-                _ => 0
-            },
-            7 => match gap {
-                3 => 3,
-                2 => 1,
-                _ => 0
-            },
+        //  number  : 1 2 3 4 5 6 
+        //  gap     :       1 2 3
+        //  noreach : x x
+        let unreachable = match items as isize + gap as isize - 4 {
+            num if num > 0 => num as usize,
             _ => 0
         };
+
+        let invalid = (1 << unreachable) - 1;
 
         total *= combo - invalid;
         start = end;
