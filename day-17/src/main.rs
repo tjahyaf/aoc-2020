@@ -1,6 +1,6 @@
 use std::collections::{HashMap, HashSet};
 use std::io::{self, BufRead};
-use  std::fs;
+use std::fs;
 
 fn main() {
     let lines = io::BufReader::new(fs::File::open("./input.txt").unwrap())
